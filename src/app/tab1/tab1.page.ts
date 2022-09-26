@@ -22,7 +22,7 @@ export class Tab1Page {
     this.userservice.loadFromAPI().subscribe((data) => {
       data.forEach((item) => {
         const obj = { lat: item.lat, lng: item.lng, city: item.city };
-        console.log(obj);
+        // console.log(obj);
 
         this.propertyList.push(obj);
         this.leafletMap();
@@ -31,7 +31,7 @@ export class Tab1Page {
   }
   leafletMap() {
     for (const property of this.propertyList) {
-      console.log(property);
+      //   console.log(property);
       Leaflet.marker([property.lat, property.lng], {
         icon: icon({
           iconSize: [20, 50], // size of the icon
@@ -53,3 +53,8 @@ export class Tab1Page {
     this.map.remove();
   }
 }
+/*  {# <div class="container">
+    <ion-button expand='block' (click)="getGeoLocation()">Obtenir localisation</ion-button>
+    <p>Lattitude : <strong>{{lattitude}}</strong></p>
+    <p>Longitude : <strong>{{longitude}}</strong></p>
+  </div> #}*/
