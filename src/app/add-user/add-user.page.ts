@@ -3,19 +3,16 @@ import { Component, OnInit, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { UserService } from '../services/User.service';
-import { Geolocation } from '@awesome-cordova-plugins/geolocation/ngx';
 
 @Component({
-  selector: 'app-tab2',
-  templateUrl: 'tab2.page.html',
-  styleUrls: ['tab2.page.scss'],
+  selector: 'app-add-user',
+  templateUrl: './add-user.page.html',
+  styleUrls: ['./add-user.page.scss'],
 })
-export class Tab2Page {
+export class AddUserPage {
   userForm: FormGroup;
-  lattitude: string;
-  longitude: string;
+
   constructor(
-    private geolocation: Geolocation,
     private router: Router,
     public formBuilder: FormBuilder,
     private zone: NgZone,
@@ -23,14 +20,10 @@ export class Tab2Page {
   ) {
     this.userForm = this.formBuilder.group({
       name: [''],
+      email: [''],
       username: [''],
-      password: [''],
-      city: [''],
-      lat: [''],
-      lng: [''],
     });
   }
-
   onSubmit() {
     if (!this.userForm.valid) {
       return false;
@@ -38,7 +31,7 @@ export class Tab2Page {
       this.userService.createUser(this.userForm.value).subscribe((response) => {
         this.zone.run(() => {
           this.userForm.reset();
-          this.router.navigate(['/tabs/tab3']);
+          this.router.navigate(['/list']);
         });
       });
     }
