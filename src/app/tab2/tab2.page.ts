@@ -36,9 +36,14 @@ export class Tab2Page {
       return false;
     } else {
       this.userService.createUser(this.userForm.value).subscribe((response) => {
+        console.log('response', response);
+
         this.zone.run(() => {
           this.userForm.reset();
-          this.router.navigate(['/tabs/tab3']);
+          // this.router.navigate([`/tabs/tab3/id=${response.id}`]);
+          this.router.navigate(['/tabs/tab3'], {
+            queryParams: { id: response.id },
+          });
         });
       });
     }

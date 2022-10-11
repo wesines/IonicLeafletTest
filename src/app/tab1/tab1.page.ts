@@ -21,9 +21,7 @@ export class Tab1Page {
     ).addTo(this.map);
     this.userservice.loadFromAPI().subscribe((data) => {
       data.forEach((item) => {
-        const obj = { lat: item.lat, lng: item.lng, city: item.city };
-        // console.log(obj);
-
+        const obj = { lat: item.lat, lng: item.lng };
         this.propertyList.push(obj);
         this.leafletMap();
       });
@@ -31,14 +29,11 @@ export class Tab1Page {
   }
   leafletMap() {
     for (const property of this.propertyList) {
-      //   console.log(property);
+      console.log(property);
       Leaflet.marker([property.lat, property.lng], {
         icon: icon({
           iconSize: [20, 50], // size of the icon
           shadowSize: [1, 2], // size of the shadow
-          iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
-          shadowAnchor: [4, 62], // the same for the shadow
-          popupAnchor: [-3, -76], // point from which the popup should open relative to the iconAnchor
           iconUrl: './../../assets/icon/marker.png',
           shadowUrl: './../../assets/icon/marker.png',
         }),
@@ -47,6 +42,7 @@ export class Tab1Page {
         .bindPopup(property.city);
       // .openPopup();
     }
+    // map.fitBounds(polyline.getBounds());
   }
 
   ionViewWillLeave() {

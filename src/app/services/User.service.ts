@@ -32,10 +32,28 @@ export class UserService {
       user.lng = currentLocation.coords.longitude.toString();
       return this.http
         .post('http://localhost:8000/api/user', user, this.httpOptions)
-        .pipe(catchError(this.handleError<User>('Error occured')));
+        .pipe(
+          tap((_) => console.log(`User created`)),
+          catchError(this.handleError<User>('Error occured'))
+        );
     });
   }
+  updateData(data: any, id: string): Observable<any> {
+    console.log('data', data, 'id', id);
+    return this.http
+      .patch(`http://localhost:8000/api/user` + id, data, this.httpOptions)
+      .pipe(
+        tap((_) => console.log(`User updated: ${id}`)),
+        catchError(this.handleError<User[]>('Update user'))
+      );
+  }
 
+  getUser(id): Observable<User[]> {
+    return this.http.get<User[]>(`http://localhost:8000/api/user/` + id).pipe(
+      tap((_) => console.log(`User fetched: ${id}`)),
+      catchError(this.handleError<User[]>(`Get User id=${id}`))
+    );
+  }
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       console.error(error);
