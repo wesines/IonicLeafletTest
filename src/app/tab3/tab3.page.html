@@ -7,14 +7,24 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Obtenir Localisation</ion-title>
-    </ion-toolbar>
-  </ion-header>
-  <div class="container">
-    <ion-button expand="block" (click)="getGeoLocation()">Obtenir localisation</ion-button>
-    <p>Lattitude : <strong>{{lattitude}}</strong></p>
-    <p>Longitude : <strong>{{longitude}}</strong></p>
+  <ion-list>
+
+    <ion-item *ngFor="let location of locationTraces">
+      <ion-label class="ion-text-wrap">
+        <ion-label>Time: {{location.timestamp | date:'M/d/yy, h:mm a'}}</ion-label>
+        <ion-label>Latitude: {{location.latitude}} Longitude: {{location.longitude}}</ion-label>
+      </ion-label>
+    </ion-item>
+
+  </ion-list>
+
+  <div class="ion-text-center">
+
+    <ng-container *ngIf="!locationWatchStarted; else elseTemplate">
+      <ion-button color="primary" (click)="getUserData()">Start Location</ion-button>
+    </ng-container>
+    <ng-template #elseTemplate>
+      Location Watch Started!
+    </ng-template>
   </div>
 </ion-content>
